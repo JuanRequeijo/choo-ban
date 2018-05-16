@@ -5,30 +5,24 @@ import swal from 'sweetalert2';
 
 
 class BoardItem extends Nanocomponent {
-  constructor(boardId, removeItem, moveItem, addItemComment) {
+  constructor(boardId, removeItem, moveItem) {
     super();
     this.boardId = boardId;
     this.removeItem = removeItem;
     this.moveItem = moveItem;
-    this.addItemComment = addItemComment;
   }
   
-  renderItemActions(item, comments) {
+  renderItemActions(item) {
     const actions = [
       {
         name: 'Remove',
         code: () => this.removeItem(item),
-        icon: 'remove_circle_outline'
+        icon: 'delete_forever'
       },
       {
         name: 'Move',
         code: () => this.moveItem(this.boardId, item.id),
         icon: 'keyboard_arrow_right'
-      },
-      {
-        name: 'Comment',
-        code: () => this.addItemComment(this.boardId, item.id),
-        icon: 'insert_comment'
       }
     ];
     
@@ -48,33 +42,21 @@ class BoardItem extends Nanocomponent {
     `;
   }
 
-  showComments(comments) {
-    const title = !!comments.length ? `Comments` : `This item has no comments yet.`
-    swal({
-      title: title,
-      html: `${comments.map(comment => {
-        return `
-          <li style="list-style: none">${comment.comment}</li>
-          <hr />`
-      })}`
-    });
-  }
-  
-  createElement(item, comments) {
-    const { title, subtitle } = item;
+    
+  createElement(item) {
+    const { title, description } = item;
+    let color = ['green accent-3', 'pink lighten-3', 'light-blue accent-4','yellow darken-2'];
+    var itemColor = item.color || color[Math.floor(Math.random() * 4)];
+    item.color = itemColor;
     return html`
       <div class="col s12">
-        <div class="card teal darken-2">
+        <div class="card ${itemColor}">
           <div class="card-content white-text row">
             <i class="material-icons right activator">more_vert</i>
             <div class="board-item-title">${title}</div>
-            <div class="board-item-subtitle">${subtitle}</div>
-            <div class="board-item-comments">
-              <span>${comments.length}</span>
-              <i class="material-icons" onclick=${() => this.showComments(comments)}>comment</i>
-            </div>
+            <div class="board-item-description">${description}</div>
           </div>
-          ${this.renderItemActions(item, comments)}
+          ${this.renderItemActions(item)}
         </div>
       </div>
     `;

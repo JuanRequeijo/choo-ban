@@ -6,14 +6,13 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import './style/style.css';
 
 /* Views */
-import home from './views/home';
-import notFound from './views/notFound';
+import home from './containers/home';
+import notFound from './containers/notFound';
 
 /* Stores */
-import persistence from './stores/persistence';
-import boards from './stores/boards';
-import boardItems from './stores/boardItems';
-import itemComments from './stores/itemComments';
+import persistence from './events/persistence';
+import boards from './events/boards';
+import boardItems from './events/boardItems';
 
 /* App */
 const app = choo();
@@ -21,11 +20,10 @@ const app = choo();
 app.use(persistence);
 app.use(boards);
 app.use(boardItems);
-app.use(itemComments);
 
 /* Routes */
 app.route('/', home);
 app.route('/*', notFound);
 
-app.mount(document.getElementById('root'))
+app.mount(document.getElementById('App'))
 

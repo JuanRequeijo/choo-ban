@@ -1,7 +1,7 @@
 {
-  "name": "choo-ban",
-  "version": "1.0.0",
-  "description": "Just a simple kanban",
+  "name": "kanban",
+  "version": "0.0.1",
+  "description": "Just a simple kanban made in choo.js",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --port 3000",
@@ -9,18 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luizbaldi/choo-ban.git"
+    "url": "git+https://github.com/juanrequeijo/kanban.git"
   },
   "keywords": [
     "kanban",
     "choo"
   ],
-  "author": "Luiz Baldi",
+  "author": "requeijo@ufmg.br",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/luizbaldi/choo-ban/issues"
-  },
-  "homepage": "https://github.com/luizbaldi/choo-ban#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

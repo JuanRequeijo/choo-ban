@@ -22,7 +22,7 @@ body, html, .home-container {
   display: inline-block;
   margin: 0 6px;
   vertical-align:top;
-  height: 100%;
+  height: @screen-xs;
 }
 
 .board .card {
@@ -41,27 +41,8 @@ body, html, .home-container {
   overflow: hidden;
 }
 
-.board-item-subtitle {
+.board-item-description {
   font-size: 14px;
-}
-
-.board-add {
-  text-align: center;
-  width: 100%;
-  font-size: 2em;
-}
-
-.board-add > i {
-  display: block;
-}
-
-.board-add > span {
-  margin-top: 12px;
-  display: block;
-}
-
-.board-add:hover {
-  cursor: pointer;
 }
 
 .board-item-reveal {
@@ -95,16 +76,6 @@ body, html, .home-container {
   line-height: 0px;
 }
 
-.board-item-comments {
-  margin-top: 4px;
-}
-
-.board-item-comments .material-icons {
-  margin-left: 4px;
-  position: absolute;
-  cursor: pointer;
-}
-
 .activator {
   cursor: pointer;
 }
@@ -131,5 +102,7 @@ html.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown), body.swal2-sho
 
   .home-container {
     white-space: initial;
+    resize: vertical;
+    overflow: auto;
   }
 }
