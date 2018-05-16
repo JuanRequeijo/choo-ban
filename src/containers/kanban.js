@@ -2,53 +2,48 @@ import html from 'choo/html';
 
 /* UI Components */
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Board from '../components/Board';
-import BoardAdd from '../components/BoardAdd';
 import swal from 'sweetalert2';
 
 /* UI Instances (This is kinda weird but I'm just following documentation */
 const header = new Header();
+const footer = new Footer();
 
-const home = (state, emit) => {
-  const renderBoards = () => {
-    const { boards, boardItems, itemComments } = state;
-    return boards.map(board => {
-      const currBoard = new Board(board.id, addNewItem, removeItem, moveItem, addItemComment);
-      const currBoardItems = boardItems.filter(boardItem => boardItem.boardId === board.id);
-      return currBoard.render(board.title, currBoardItems, itemComments);
-    });
-  }
-
-  const addNewBoard = async () => {
-    const { value } = await swal({
-      title: 'New board',
-      html: `<input id="board-title" class="swal2-input" placeholder="Title">`,
-      focusConfirm: false,
-      preConfirm: () => document.getElementById('board-title').value
-    })
-
-    if (typeof value === 'string') {
-      emit('boards:add', value);
-    } else {
-      swal(
-        'Ops...',
-        'You should type the board title to procced :)',
-        'warning'
-      );
+const kanban = (state, emit) => {
+  const grids = [{
+      id: 1,
+      title: 'Todo'
+    },{
+      id: 2,
+      title: 'Doing'
+    },{
+      id: 3,
+      title: 'Done'
     }
+  ]
+  const renderBoards = () => {
+    state.boards = grids;
+    const { boards, boardItems } = state;
+    return boards.map(board => {
+      var todoAction = board.title === 'Todo' ?  addNewItem : function(){};
+      const currBoard = new Board(board.id, todoAction, removeItem, moveItem);
+      const currBoardItems = boardItems.filter(boardItem => boardItem.boardId === board.id);
+      return currBoard.render(board.title, currBoardItems);
+    });
   }
 
   const addNewItem = async (boardId) => {
     const { value } = await swal({
-      title: 'New board item',
+      title: 'New task',
       html: `
         <input id="item-title" class="swal2-input" placeholder="Title">
-        <input id="item-subtitle" class="swal2-input" placeholder="Subtitle (optional)">`,
+        <input id="item-description" class="swal2-input" placeholder="description (optional)">`,
       focusConfirm: false,
       preConfirm: () => {
         const title = document.getElementById('item-title').value;
-        const subtitle = document.getElementById('item-subtitle').value;
-        return { title, subtitle };
+        const description = document.getElementById('item-description').value;
+        return { title, description };
       }
     });
     
@@ -61,19 +56,6 @@ const home = (state, emit) => {
         'warning'
       );
     }
-  }
-
-  const addItemComment = async (boardId, itemId) => {
-    const { value } = await swal({
-      title: 'New comment',
-      html: `<input id="board-title" class="swal2-input" placeholder="Input your comment...">`,
-      focusConfirm: false,
-      preConfirm: () => document.getElementById('board-title').value
-    })
-    if (value) {
-      emit('itemComment:add', boardId, itemId, value);
-    }
-    
   }
 
   const moveItem = async (boardId, itemId) => {
@@ -95,7 +77,6 @@ const home = (state, emit) => {
   
       if (value) {
         emit('boardItem:move', itemId, value);
-        emit('itemComment:move', itemId, boardId, value)
       }
     } else {
       swal(
@@ -115,17 +96,17 @@ const home = (state, emit) => {
     );
   }
   
-  const boardAdd = new BoardAdd(addNewBoard);
   return html`
-    <div class="home-container">
+    <div class="kanban-container">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       ${header.render()}
       <div class="content">
         ${renderBoards()}
-        ${boardAdd.render()}
       </div>
     </div>
   `;
 };
 
 
-export default home;
+export default kanban;

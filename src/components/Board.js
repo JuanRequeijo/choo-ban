@@ -20,6 +20,19 @@ class Board extends Nanocomponent {
       return new BoardItem(this.id, this.removeItem, this.moveItem).render(item);
     });
   }
+
+  addNewTaskButton() {
+    return this.id === 1 ?
+            html`<div class="container">
+                  <a class="waves-effect waves-light btn btn-block amber darken-1" onclick=${() => this.addNewItem(this.id)}>
+                    <i class="material-icons left ">add</i>
+                    New task
+                  </a>
+                </div>` :
+            html``;
+
+  }
+
   createElement(title, items) {
     return html`
       <div class="board">
@@ -30,12 +43,7 @@ class Board extends Nanocomponent {
             <div class="row">
               ${this.renderItems(items)}
             </div>
-            <div class="container">
-              <a class="waves-effect waves-light btn btn-block amber darken-1" onclick=${() => this.addNewItem(this.id)}>
-                <i class="material-icons left ">add</i>
-                New task
-              </a>
-            </div>
+            ${this.addNewTaskButton()}
           </div>
         </div>
       </div>

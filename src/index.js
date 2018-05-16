@@ -6,7 +6,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import './style/style.css';
 
 /* Views */
-import home from './containers/home';
+import kanban from './containers/kanban';
 import notFound from './containers/notFound';
 
 /* Stores */
@@ -22,7 +22,7 @@ app.use(boards);
 app.use(boardItems);
 
 /* Routes */
-app.route('/', home);
+app.route('/', kanban);
 app.route('/*', notFound);
 
 app.mount(document.getElementById('App'))
